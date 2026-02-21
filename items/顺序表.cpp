@@ -1,20 +1,20 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define InitSize 10
-//#define Max 10 // 线性表的最大长度
-//// 静态分配
-//// 定义顺序表类型
-//typedef struct SqList {
-//	int data[Max];
-//	int length;
-//}Sqlist;
-//// 初始化顺序表
-//void InitList(Sqlist* l) {
-//	for (int i = 0; i < Max; i++) {
-//		l->data[i] = 0;
-//	}
-//	l->length = 0;
-//}
+// #define Max 10 // 线性表的最大长度
+// // 静态分配
+// // 定义顺序表类型
+// typedef struct SqList {
+// 	int data[Max];
+// 	int length;
+// }Sqlist;
+// // 初始化顺序表
+// void InitList(Sqlist* l) {
+// 	for (int i = 0; i < Max; i++) {
+// 		l->data[i] = 0;
+// 	}
+// 	l->length = 0;
+// }
 
 //动态分配
 //定义动态顺序表
