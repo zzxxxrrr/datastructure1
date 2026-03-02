@@ -1,84 +1,48 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h> // å¿…é¡»åŒ…å«è¿™ä¸ªæ¥ä½¿ç”¨ bool
 
-typedef struct LNode {
-    int data; 
-    struct LNode *next; 
-} LNode, *LinkList;
+typedef struct LNode{
+    int data;
+   struct LNode *next;
+}*LinkList,LNode;
 
-// ä¿®æ­£ï¼šä½¿ç”¨äºŒçº§æŒ‡é’ˆä»¥ä¿®æ”¹ main ä¸­çš„ L æŒ‡å‘
-bool InitList(LinkList *L) {
-    *L = (LNode*)malloc(sizeof(LNode));
-    if (*L == NULL) return false;
-    (*L)->next = NULL;
+bool InitList(LinkList &L){//³õÊ¼»¯Á´±í
+    L=(LNode*)malloc(sizeof(LNode));
+    if(L==NULL) return false;
+    L->next=NULL;
+    L->data=0;
     return true;
 }
 
-// ä¿®æ­£ï¼šæ’å…¥æ“ä½œï¼Œi æ˜¯ä½ç½®ï¼Œe æ˜¯å€¼
-// å› ä¸ºæœ‰å¤´ç»“ç‚¹ï¼ŒL æŒ‡å‘å¤´ç»“ç‚¹çš„åœ°å€ä¸éœ€è¦æ”¹å˜ï¼Œä¼ ä¸€çº§æŒ‡é’ˆå³å¯
-bool ListInsert(LinkList L, int i, int e) {
-    if (i < 1) return false;
+void CreateList(LinkList &L,int arr[],int n){//ÀûÓÃÊı×é´´½¨Ò»¸öÁ´±í
+    if (L == NULL) InitList(L);
+     LNode * rear=L;//Î²Ö¸Õë,Ö¸ÏòÁ´±í×îºóÒ»¸ö½Úµã
+     for(int i =0;i<n;i++){
+        LNode *s=(LNode*)malloc(sizeof(LNode));
+        s->data=arr[i];
+        rear->next=s;
+        rear=s;
+     }
+     rear->next=NULL;
+}
 
-    LNode* p = L; // p æŒ‡å‘å¤´ç»“ç‚¹
-    int j = 0; 
-
-    // å¯»æ‰¾ç¬¬ i-1 ä¸ªèŠ‚ç‚¹
-    while (p != NULL && j < i - 1) {
-        p = p->next;
-        j++;
-    }
-
-    // å¦‚æœ p ä¸ºç©ºï¼Œè¯´æ˜æ’å…¥ä½ç½®è¶…å‡ºäº†é“¾è¡¨é•¿åº¦+1
-    if (p == NULL) return false;
-
-    LNode *s = (LNode *)malloc(sizeof(LNode));
-    if (s == NULL) return false;
+int main(){
+    LinkList L=NULL;
+    int data[] = {10, 20, 30, 40};
     
-    s->data = e;
-    s->next = p->next;
-    p->next = s;
-    return true;
+    // Ö±½Óµ÷ÓÃ´´½¨º¯Êı£¨ÄÚ²¿»á´¦Àí³õÊ¼»¯£©
+    CreateList(L, data, 4);
+    printf("Á´±í¿ìËÙ´´½¨³É¹¦£¡\n");
+    if (L && L->next) {
+        printf("µÚÒ»¸öÊı¾İÊÇ£º%d\n", L->next->data);
+    }
+    LNode *p;
+while (L != NULL) {
+    p = L;       // ¼Ç×¡µ±Ç°½Úµã
+    L = L->next; // Ö¸ÏòÏÂÒ»¸ö£¬·ÀÖ¹¶Ï¿ª
+    free(p);     // ÊÍ·Åµ±Ç°
 }
-
-void PrintList(LinkList L) {
-    LNode *p = L->next; 
-    printf("å½“å‰é“¾è¡¨å†…å®¹: ");
-    while (p != NULL) {
-        printf("%d -> ", p->data);
-        p = p->next;
-    }
-    printf("NULL\n");
-}
-
-int main() {
-    LinkList L = NULL;
-    // ä¼ å…¥ L çš„åœ°å€
-    if (!InitList(&L)) {
-        printf("åˆå§‹åŒ–å¤±è´¥\n");
-        return 1;
-    }
-
-    printf("[æµ‹è¯•1] åœ¨ä½ç½® 1 æ’å…¥ 100\n");
-    ListInsert(L, 1, 100);
-    PrintList(L);
-
-    printf("\n[æµ‹è¯•2] åœ¨ä½ç½® 2 æ’å…¥ 200\n");
-    ListInsert(L, 2, 200);
-    PrintList(L);
-
-    printf("\n[æµ‹è¯•3] åœ¨ä½ç½® 1 æ’å…¥ 50\n");
-    ListInsert(L, 1, 50);
-    PrintList(L);
-
-    // é‡Šæ”¾å†…å­˜
-    LNode *temp;
-    while (L != NULL) {
-        temp = L;
-        L = L->next;
-        free(temp);
-    }
-    printf("\nå†…å­˜å·²é‡Šæ”¾ï¼Œæµ‹è¯•ç»“æŸã€‚\n");
-
+L = NULL;
+    L=NULL; //·ÀÖ¹²úÉúÒ°Ö¸Õë,Èç¹û²»Ö¸NULL,lÖĞ»¹»á´æÓĞÕâ¿éÒÑ¾­±»ÊÍ·ÅµÄ¿Õ¼äµÄµØÖ·Öµ
     return 0;
 }
