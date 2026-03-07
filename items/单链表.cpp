@@ -77,10 +77,42 @@ bool Delete(LinkList &L,int i,int &e){//删除第i个位置的元素
     if(p->next==NULL) return false;
     LNode *q=p->next;
     p->next=q->next;
-    int e=q->data;
+    e=q->data;
     free(q);
-    return false;
+    return true;
 }
+
+LNode * GetNode(LinkList L,int i){//按位查找
+     if(i==0) return L; 
+     if(i<0) return NULL;
+     int j=1;
+     LNode *p=L->next;
+     while(p!=NULL&&j<i){
+        j++;
+        p=p->next;
+     } 
+     return p;
+}
+
+LNode * GetNode1(LinkList L,int e){//按值查找
+     LNode *p=L->next;
+     while(p!=NULL&&p->data!=e){
+        p=p->next;
+     }
+     return p;
+}
+
+int Length(LinkList L){//求表长
+    int len=0;
+    if(L==NULL) return -1;
+    while(L->next!=NULL){
+        len++;
+        L=L->next;
+    }
+    return len;
+}
+
+
 
 int main(){
     LinkList L=NULL;
